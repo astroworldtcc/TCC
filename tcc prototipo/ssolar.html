@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="js/script.js" defer></script>
+    <title>AstroWorld</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;600;700&display=swap');
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Familjen Grotesk', sans-serif;
+            background: #000;
+            color: #fff;
+        }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Header/Navbar */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 3;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-transform: uppercase;
+            height: 100px;
+            padding: 0 30px;
+        }
+
+        /* Logo */
+        .logo {
+            width: 110px;
+            height: auto;
+        }
+
+        .logo img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        /* Desktop Menu */
+        .desktop-main-menu {
+            margin-right: 50px;
+        }
+
+        .desktop-main-menu ul {
+            display: flex;
+        }
+
+        .desktop-main-menu ul li {
+            position: relative;
+            margin-right: 20px;
+            padding-bottom: 2px;
+        }
+
+        /* Menu item bottom border */
+        .desktop-main-menu ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: #fff;
+            transform: scaleX(0);
+            transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            transform-origin: right center;
+        }
+
+        .desktop-main-menu ul li a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left center;
+            transition-duration: 0.4s;
+        }
+
+        /* Sections */
+        section {
+            position: relative;
+            height: 100vh;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            text-transform: uppercase;
+        }
+
+        .section-inner {
+            position: absolute;
+            bottom: 200px;
+            left: 150px;
+            max-width: 560px;
+        }
+
+        .section-inner h4 {
+            font-size: 22px;
+            margin-bottom: 5px;
+            font-weight: 300;
+            animation: fadeInUp 0.5s ease-in-out;
+        }
+
+        .section-inner h2 {
+            font-size: 50px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.5s ease-in-out 0.2s;
+            animation-fill-mode: both; // Stop from showing at start
+        }
+
+        .section-inner a {
+            animation: fadeInUp 0.5s ease-in-out 0.4s;
+            animation-fill-mode: both; // Stop from showing at start
+        }
+
+        /* Background images */
+        .section-a {
+            background-image: linear-gradient(rgba(34, 34, 34, 0.65), rgba(30, 30, 31, 0.65)), url('./image/systemsolar1.jpg');
+        }
+
+        .section-b {
+            background-image: linear-gradient(rgba(34, 34, 34, 0.65), rgba(30, 30, 31, 0.65)), url('./image/systemsolar3.jpg');
+        }
+
+        .section-c {
+            background-image: linear-gradient(rgba(34, 34, 34, 0.65), rgba(30, 30, 31, 0.65)), url('./image/sistemasolar4.jpg');
+        }
+
+        .section-d {
+            background-image: linear-gradient(rgba(34, 34, 34, 0.65), rgba(30, 30, 31, 0.65)), url('./image/sun.jpg');
+        }
+
+        .section-e {
+            background-image: linear-gradient(rgba(34, 34, 34, 0.65), rgba(30, 30, 31, 0.65)), url('./image/mercurio.webp');
+        }
+
+        .section-f {
+            background-image: linear-gradient(rgba(34, 34, 34, 0.65), rgba(30, 30, 31, 0.65)), url('./image/systemsolar5.jpg');
+        }
+
+        .section-g {
+            background-image: linear-gradient(rgba(34, 34, 34, 0.65), rgba(30, 30, 31, 0.65)), url('./image/marte.jpg');
+        }
+
+        .section-h {
+            background-image: linear-gradient(rgba(34, 34, 34, 0.65), rgba(30, 30, 31, 0.65)), url('./image/jupiter.png');
+        }
+
+        .section-i {
+            background-image: linear-gradient(rgba(34, 34, 34, 0.65), rgba(30, 30, 31, 0.65)), url('./image/saturno.jpg');
+        }
+
+        .section-j {
+            background-image: linear-gradient(rgba(34, 34, 34, 0.65), rgba(30, 30, 31, 0.65)), url('./image/urano.jpg');
+        }
+
+        .section-k {
+            background-image: linear-gradient(rgba(34, 34, 34, 0.65), rgba(30, 30, 31, 0.65)), url('./image/netuno.webp');
+        }
+
+        .btn {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            text-align: center;
+            min-width: 130px;
+            padding: 15px 50px;
+            margin-top: 10px;
+            border: 2px solid #fff;
+            text-transform: uppercase;
+            font-weight: bold;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .btn:hover span {
+            color: #000;
+        }
+
+        .btn .hover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            color: #000;
+            z-index: -1;
+            transform: translateY(100%);
+            transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .btn:hover .hover {
+            transform: translateY(0);
+        }
+
+        .scroll-arrow {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: fadeBounce 5s infinite;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            padding: 55px 0;
+        }
+
+        footer ul {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        footer ul li {
+            margin-right: 30px;
+            color: #aaa;
+            text-transform: uppercase;
+            font-size: 13px;
+            line-height: 2.5;
+        }
+
+        footer ul li a {
+            color: #fff;
+            transition: color 0.6s;
+        }
+
+        footer ul li a:hover {
+            color: #aaa;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            position: fixed;
+            top: 40px;
+            right: 20px;
+            z-index: 10;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            background: none;
+            border: none;
+        }
+
+        .hamburger-top,
+        .hamburger-middle,
+        .hamburger-bottom {
+            position: absolute;
+            width: 20px;
+            height: 2px;
+            top: 0;
+            left: 0;
+            background: #fff;
+            transition: all 0.5s;
+        }
+
+        .hamburger-middle {
+            transform: translateY(5px);
+        }
+
+        .hamburger-bottom {
+            transform: translateY(10px);
+        }
+
+        /* Transition hamburger to X when open */
+        .open {
+            transform: rotate(90deg);
+        }
+
+        .open .hamburger-top {
+            transform: rotate(45deg) translateY(6px) translateX(6px);
+        }
+
+        .open .hamburger-middle {
+            display: none;
+        }
+
+        .open .hamburger-bottom {
+            transform: rotate(-45deg) translateY(6px) translateX(-6px);
+        }
+
+        /* Overlay */
+        .overlay-show {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 3;
+        }
+
+        /* Stop body scroll */
+        .stop-scrolling {
+            overflow: hidden;
+        }
+
+        /* Hide mobile main menu items */
+        .mobile-only {
+            display: none;
+        }
+
+        /* Mobile menu */
+        .mobile-main-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 350px;
+            height: 100%;
+            background: #000;
+            z-index: 4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translateX(100%);
+            transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        /* Bring menu from right */
+        .show-menu {
+            transform: translateX(0);
+        }
+
+        .mobile-main-menu ul {
+            display: flex;
+            flex-direction: column;
+            align-items: end;
+            justify-content: center;
+            padding: 50px;
+            width: 100%;
+        }
+
+        .mobile-main-menu ul li {
+            margin-bottom: 20px;
+            font-size: 18px;
+            text-transform: uppercase;
+            border-bottom: 1px #555 dotted;
+            width: 100%;
+            text-align: right;
+            padding-bottom: 8px;
+        }
+
+        .mobile-main-menu ul li a {
+            color: #fff;
+            transition: color 0.6s;
+        }
+
+        .mobile-main-menu ul li a:hover {
+            color: #aaa;
+        }
+
+        /* Inner Pages */
+        .bg-falcon-9 {
+            background-image: url('../img/falcon-9.webp');
+        }
+
+        .bg-falcon-heavy {
+            background-image: url('../img/falcon-heavy.webp');
+        }
+
+        .bg-dragon {
+            background-image: url('../img/dragon.webp');
+        }
+
+        .section-animate {
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .section-inner-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-transform: uppercase;
+            text-align: center;
+            width: 80%;
+        }
+
+        .section-inner-center h3 {
+            font-size: 100px;
+            margin-bottom: 15px;
+            animation: fadeInUp 0.5s ease-in-out;
+        }
+
+        .section-inner-center p {
+            font-size: 20px;
+            animation: fadeInUp 0.5s ease-in-out 0.2s;
+            animation-fill-mode: both;
+        }
+
+        /* Stats */
+        .stats {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .stats div span {
+            font-size: 160px;
+        }
+
+        .stats div h4 {
+            font-size: 24px;
+            font-weight: 300;
+        }
+
+        /* Animations */
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(140px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeBounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            40% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Media Queries */
+
+        @media (max-width: 960px) {
+
+            /* Hide desktop menu */
+            .desktop-main-menu {
+                display: none;
+            }
+
+            /* Show main mobile items */
+            .mobile-only {
+                display: block;
+            }
+
+            .section-inner-center h3 {
+                font-size: 75px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .section-inner {
+                bottom: 75px;
+                left: 20px;
+            }
+
+            .section-inner h2 {
+                font-size: 40px;
+            }
+
+            footer ul li:first-child {
+                position: absolute;
+                top: 30px;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            footer ul li {
+                margin-right: 15px;
+            }
+
+            .logo {
+                width: 150px;
+                margin: auto;
+            }
+
+            .section-inner-center h3 {
+                font-size: 50px;
+            }
+
+            /* Stats */
+            .stats {
+                flex-direction: column;
+            }
+
+            .stats div {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+ 
+    <header class="main-header">
+        <div class="logo">
+            <a href="../tcc prototipo/index.html">
+                <img src="./image/logo.png" alt="AstroWorld" />
+            </a>
+        </div>
+
+    </header>
+    
+    <!-- Section A -->
+    <section class="section-a">
+        <div class="section-inner">
+            <h2>Conheça o sistema solar</h2>
+            <h5> <!-- O sistema solar é um dos temas mais empolgantes da astronomia, e por boas razões. Ele é o lar do nosso
+                planeta, a Terra, e de uma incrível variedade de corpos celestes, desde pequenos asteroides até imensos
+                gigantes gasosos. Vamos explorar um pouco mais sobre o nosso sistema solar. -->
+                Os planetas são talvez os objetos mais conhecidos do sistema solar, um você já conhece muito bem. 
+                <br> Existem oito planetas reconhecidos
+                oficialmente, mas antes de se aventurar por eles, comece por: o que é o sistema solar?
+            </h5>
+
+            <br>
+
+            <a href="../HomeTCC/index.html" class="btn">
+                <div class="hover"></div>
+                <span>Explore conosco a AstroWorld!</span>
+            </a>
+        </div>
+
+        <div class="scroll-arrow">
+            <svg width="30px" height="20px">
+                <path stroke="#ffffff" fill="none" stroke-width="2px" d="M2.000,5.000 L15.000,18.000 L28.000,5.000 ">
+                </path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Section B -->
+    <section class="section-b">
+        <div class="section-inner">
+            <h2>Onde habitamos e vivemos</h2>
+            <h5>O sistema solar é a nossa casa, ele é composto principalmente pelo Sol, e por todos os
+                objetos que orbitam ao seu redor devido à gravidade. Estes objetos incluem planetas, luas, asteroides,
+                cometas e outros corpos celestes. 
+                <br>
+                Os planetas são talvez os objetos mais conhecidos do sistema solar.
+                Os planetas do Sistema Solar formam um agrupamento de oito corpos celestes que orbitam o Sol: Mercúrio,
+                Vênus Terra, Marte, Júpiter, Saturno, Urano e Netuno.
+            </h5>
+
+        </div>
+
+        <div class="scroll-arrow">
+            <svg width="30px" height="20px">
+                <path stroke="#ffffff" fill="none" stroke-width="2px" d="M2.000,5.000 L15.000,18.000 L28.000,5.000 ">
+                </path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Section C -->
+    <section class="section-c">
+        <div class="section-inner">
+            <h2>Terra: Nosso Lar no Espaço</h2>
+            <h5> <!-- A Terra, o terceiro planeta a partir do Sol, é o único conhecido por abrigar vida. Com uma mistura ideal
+                de gases na atmosfera, variados ecossistemas e ciclos naturais, é um planeta de incrível biodiversidade.
+                No entanto, a ação humana está causando mudanças climáticas preocupantes. A preservação da Terra e a
+                adoção de práticas sustentáveis são essenciais. --> Além de ser nosso lar, a Terra é o ponto de partida para
+                a exploração espacial.</h5>
+            <a href="https://www.google.com.br/earth/index.html" class="btn">
+                <div class="hover"></div>
+                <span>Veja a terra em 3D</span>
+            </a>
+
+            <a href="./terra/terra.html" class="btn">
+                <div class="hover"></div>
+                <span>Veja mais sobre a terra</span>
+            </a>
+        </div>
+
+        <div class="scroll-arrow">
+            <svg width="30px" height="20px">
+                <path stroke="#ffffff" fill="none" stroke-width="2px" d="M2.000,5.000 L15.000,18.000 L28.000,5.000 ">
+                </path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Section D -->
+    <section class="section-d">
+        <div class="section-inner">
+            <h2>Sol</h2>
+            <h5>
+                O Sol é a fonte primária de energia para a Terra, sem ele nossa vida não seria possível.
+            </h5>
+
+            <br>
+
+            <a href="./terra/sol.html" class="btn">
+                <div class="hover"></div>
+                <span>Veja mais sobre nossa Estrela</span>
+            </a>
+        </div>
+
+        <div class="scroll-arrow">
+            <svg width="30px" height="20px">
+                <path stroke="#ffffff" fill="none" stroke-width="2px" d="M2.000,5.000 L15.000,18.000 L28.000,5.000 ">
+                </path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Section E -->
+    <section class="section-e">
+        <div class="section-inner">
+            <h2>Mercúrio</h2>
+            <h5>
+                Conheça mais sobre o planeta mais próximo do Sol em nosso sistema solar. 
+                <!-- localizado a uma distância média de
+                aproximadamente 58 milhões de quilômetros.<br>
+                Devido à sua proximidade com o Sol, Mercúrio experimenta extremos de temperatura. Durante o dia, a
+                temperatura pode atingir cerca de 430 graus Celsius, enquanto à noite, cai para cerca de -180 graus
+                Celsius.
+                Mercúrio possui uma atmosfera muito tênue, composta principalmente de traços de gases como hélio,
+                hidrogênio e oxigênio. Isso significa que não há proteção significativa contra a radiação solar e
+                micrometeoritos, tornando-o um ambiente hostil. -->
+            </h5>
+
+            <br>
+
+            <a href="https://www.todamateria.com.br/planeta-mercurio/" class="btn">
+                <div class="hover"></div>
+                <span>Veja mais sobre</span>
+            </a>
+        </div>
+
+        <div class="scroll-arrow">
+            <svg width="30px" height="20px">
+                <path stroke="#ffffff" fill="none" stroke-width="2px" d="M2.000,5.000 L15.000,18.000 L28.000,5.000 ">
+                </path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Section F -->
+    <section class="section-f">
+        <div class="section-inner">
+            <h2>Vênus</h2>
+            <h5>
+                <!-- Vênus é um planeta que desafia as expectativas, sendo um dos lugares mais inóspitos do sistema solar
+                devido às suas condições extremas de temperatura e atmosfera. Sua complexidade geológica e atmosférica o
+                tornam um tópico de grande interesse para a pesquisa espacial. -->
+                Planeta Gêmeo da Terra: Vênus é frequentemente chamado de "gêmeo da Terra" devido ao tamanho e
+                composição semelhantes. 
+                <br> No entanto, as semelhanças param por aí, uma vez que Vênus é um mundo inóspito
+                devido a sua atmosfera densa e extremamente quente.
+            </h5>
+
+            <br>
+
+            <a href="./terra/venus.html" class="btn">
+                <div class="hover"></div>
+                <span>Veja mais sobre</span>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- Section G -->
+    <section class="section-g">
+        <div class="section-inner">
+            <h2>Marte</h2>
+            <h5>
+                Conheça o famoso "Planeta Vermelho"
+                <!-- Marte é muitas vezes chamado de "Planeta Vermelho" devido à sua coloração avermelhada, que é resultado
+                da presença de óxido de ferro (ferrugem) na superfície.Marte é o quarto planeta a partir do Sol,
+                situando-se entre a Terra e o cinturão de asteroides. Sua órbita é mais distante do Sol do que a da
+                Terra.Marte exibe uma variedade de características geológicas, incluindo canais e vales que sugerem a
+                presença de água líquida em seu passado distante. No entanto, a maior parte da água hoje em Marte está
+                na forma de gelo. Várias missões espaciais, incluindo as sondas Viking, Spirit, Opportunity,
+                Curiosity e Perseverance da NASA, bem como missões de agências espaciais de outros países, exploraram
+                Marte. Essas missões têm contribuído para nosso entendimento do planeta. -->
+            </h5>
+
+            <br>
+
+            <a href="./terra/marte.html" class="btn">
+                <div class="hover"></div>
+                <span>Veja mais sobre</span>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- Section H -->
+    <section class="section-h">
+        <div class="section-inner">
+            <h2>Júpiter</h2>
+            <h5>
+                Júpiter é o maior planeta do nosso sistema solar, com uma massa
+                aproximadamente 2,5 vezes maior que a de todos os outros planetas somados.
+                Ele é conhecido por sua Grande Mancha Vermelha, uma tempestade gigante que
+                existe há mais de 300 anos. 
+                <!-- Essa característica é tão grande que poderia engolir a Terra várias vezes.
+                Também possui um sistema de anéis, embora não sejam tão visíveis quanto os anéis de Saturno.
+                Esses anéis são compostos principalmente de partículas de poeira e detritos.
+                Além do mais, ele tem mais de 80 luas conhecidas, sendo as quatro maiores chamadas de Luas
+                Galileanas: Io, Europa, Ganimedes e Calisto. Elas foram descobertas por <a
+                    href="https://www.todamateria.com.br/galileu-galilei/">Galileu Galilei</a> em 1610. -->
+            </h5>
+
+            <br>
+
+            <a href="./terra/jupiter.html" class="btn">
+                <div class="hover"></div>
+                <span>Veja mais sobre</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Section I -->
+    <section class="section-i">
+        <div class="section-inner">
+            <h2>Saturno</h2>
+            <h5>
+                Saturno é um gigante gasoso com anéis deslumbrantes que o tornam um dos planetas mais fascinantes do Sistema Solar.
+                <!-- 
+                Saturno é o sexto planeta a partir do Sol em nosso sistema solar e é conhecido por suas características
+                únicas:
+
+                Saturno é facilmente identificável devido aos seus notáveis anéis, que são compostos principalmente de
+                partículas de gelo e poeira, tornando-o o planeta mais anelado do sistema solar.
+
+                O planeta tem um diâmetro de cerca de 116.464 quilômetros, tornando-o o segundo maior planeta, superado
+                apenas por Júpiter.
+
+                O planeta possui um sistema de mais de 80 luas conhecidas, sendo a maior delas chamada Titã, que tem uma
+                atmosfera densa e é um alvo importante para estudos científicos.
+
+                A característica mais proeminente de Saturno é seu sistema de anéis, que é composto por inúmeros anéis
+                finos, separados por lacunas. Esses anéis são um espetáculo visual e alvo de estudo para astrônomos.
+                -->
+            </h5>
+
+            <br>
+
+            <a href="./terra/saturno.html" class="btn">
+                <div class="hover"></div>
+                <span>Veja mais sobre</span>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- Section J -->
+    <section class="section-j">
+        <div class="section-inner">
+            <h2>Urano</h2>
+            <h5>
+                Urano é o sétimo planeta a partir do Sol no sistema solar, é um planeta distinto e intrigante em nosso sistema. 
+                <!-- Ele é notável por sua inclinação axial
+                extrema, fazendo-o girar quase de lado. Urano é um gigante gasoso, composto principalmente de hidrogênio
+                e hélio, sem superfície sólida. Possui anéis estreitos e escuros e mais de 20 luas conhecidas, com
+                Titânia sendo a maior delas. A sonda Voyager 2 o visitou em 1986, fornecendo informações cruciais. Suas
+                mudanças climáticas sazonais são únicas devido à inclinação extrema, e seu campo magnético inclinado é
+                um mistério científico em curso. -->
+            </h5>
+
+            <a href="./terra/urano.html" class="btn">
+                <div class="hover"></div>
+                <span>Veja mais sobre</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Section J -->
+    <section class="section-k">
+        <div class="section-inner">
+            <h2>Netuno</h2>
+            <h5>
+                Netuno, o último planeta do sistema solar. 
+                <!-- é um gigante gasoso com uma atmosfera composta principalmente
+                de hidrogênio e hélio. Seu tamanho é impressionante, com um diâmetro de aproximadamente 49.244
+                quilômetros. Uma de suas características mais notáveis é a Grande Mancha Escura, uma gigantesca
+                tempestade que lembra a Grande Mancha Vermelha de Júpiter.
+                Netuno também possui um sistema de anéis discretos e abriga 14 luas conhecidas, sendo a maior delas
+                chamada Tritão. Tritão é uma lua intrigante que orbita Netuno em uma direção oposta à rotação do
+                planeta, sugerindo que possa ter sido uma lua capturada de outra parte do sistema solar. Além disso,
+                Tritão exibe atividade geológica com geisers que emitem nitrogênio líquido. -->
+            </h5>
+
+            <a href="./terra/netuno.html" class="btn">
+                <div class="hover"></div>
+                <span>Veja mais sobre</span>
+            </a>
+    </section>
+
+    <footer>
+        <ul>
+            <li>AstroWorld &copy; 2023</li>
+            <li><a href="#">YouTube</a></li>
+            <li><a href="https://www.instagram.com/astroworld_tcc/">Instagram</a></li>
+        </ul>
+    </footer>
+</body>
+
+</html>
